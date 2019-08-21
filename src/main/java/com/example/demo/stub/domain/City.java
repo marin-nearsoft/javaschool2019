@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.stub.domain;
 
 public class City {
     private String name;

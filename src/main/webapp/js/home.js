@@ -5,9 +5,11 @@ $(document).ready(function(){
     }
 
     function _fillSelect(array, select){
-        $(array).each(function(index, city){
-            select.append(createOption(city));
-        });
+        if(select.find("option").length <= 1){
+            $(array).each(function(index, city){
+                select.append(createOption(city));
+            });
+        }
     }
 
     function _changeCity(event){
@@ -25,11 +27,12 @@ $(document).ready(function(){
     }
 
     function _cityPath(path){
-        console.log(path);
+        $('#cityPath').val(path);
     }
 
     rest("GET", config.rest.city, _getCities);
     rest("GET", config.rest.size, _sizes);
+    rest("GET", config.rest.shippingInformation, _fillShippingInformation)
 
     function _sizes(sizes){
         _fillSelect(sizes, $('#sizeSelect'));
@@ -62,5 +65,11 @@ $(document).ready(function(){
 
     function _transports(transports){
         _fillSelect(transports, $('#transportSelect'));
+    }
+
+    function _fillShippingInformation(shippingInformations){
+        $(shippingInformations).each(function(index, shippingInformation){
+            fillShippingTable(shippingInformation);
+        });
     }
 });

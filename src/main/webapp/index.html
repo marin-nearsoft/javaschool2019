@@ -14,6 +14,8 @@
 </head>
 
 <body>
+    <input style="display: none;" id="price">
+    <input style="display: none;" id="cityPath">
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <a class="navbar-brand" href="#">
             <img src="https://nearsoft.com/wp-content/themes/Velvet/_img/favicon.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -92,8 +94,8 @@
             <p></p>
             <div class="row text-right">
                 <div class="col">
-                    <button type="button" class="btn btn-secondary">Check Price</button>
-                    <button type="button" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn btn-secondary" id="checkPriceButton">Check Price</button>
+                    <button type="button" class="btn btn-primary" id="sendShippingButton">Send</button>
                 </div>
             </div>
             <p></p>
@@ -104,7 +106,7 @@
             <p></p>
             <div class="row">
                 <div class="col">
-                    <table class="table table-hover table-bordered table-sm">
+                    <table class="table table-hover table-bordered table-sm" id="shippingTable">
                         <thead>
                             <tr>
                                 <th scope="col">Folio</th>
@@ -112,23 +114,7 @@
                                 <th scope="col">Price</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">123456</th>
-                                <td>Chihuahua -> Chipas</td>
-                                <td>$ 12,345.00</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">123456</th>
-                                <td>Monterrey -> Baja California Sur</td>
-                                <td>$ 12,345.00</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">123456</th>
-                                <td>Zacatecas -> Colima</td>
-                                <td>$ 12,345.00</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>    
                 </div>
             </div>

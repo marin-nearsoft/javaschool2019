@@ -27,9 +27,21 @@ function rest(method, path, success, payload){
     $.ajax(settings);
 };
 
-function createOption(object){
+function createOption(value){
     return $('<option>', { 
-        value: object.name,
-        text : object.name 
+        value: value,
+        text : value 
     });
+}
+
+function fillShippingTable(shippingInformation){
+    $("#shippingTable tbody").append(function(){
+        return $('<tr>', {}).append(function(){
+            return $('<td>', {text: shippingInformation.folio})
+        }).append(function(){
+            return $('<td>', {text: shippingInformation.path})
+        }).append(function(){
+            return $('<td>', {text: shippingInformation.price})
+        })
+    })
 }
