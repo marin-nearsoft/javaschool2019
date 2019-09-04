@@ -32,7 +32,7 @@ public class HomeController {
 
     @GetMapping("/size")
     public ResponseEntity<List<PackageSize>> size() {
-        return new ResponseEntity<>(repo.getSizes(), HttpStatus.OK);
+        return new ResponseEntity<>(repo.getPackageSizes(), HttpStatus.OK);
     }
 
     @GetMapping("/type")

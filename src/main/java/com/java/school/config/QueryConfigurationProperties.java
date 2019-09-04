@@ -8,7 +8,7 @@ import lombok.Data;
 @Component
 @ConfigurationProperties(prefix = "java.school.query")
 @Data
-public class QueryConfig {
+public class QueryConfigurationProperties {
 
     private String packageSize;
     private String packageType;

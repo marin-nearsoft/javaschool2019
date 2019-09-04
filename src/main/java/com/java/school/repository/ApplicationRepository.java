@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.java.school.config.QueryConfig;
+import com.java.school.config.QueryConfigurationProperties;
 import com.java.school.domain.City;
 import com.java.school.domain.PackageSize;
 import com.java.school.domain.PackageType;
 import com.java.school.domain.TransportType;
 import com.java.school.domain.TransportVelocity;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class ApplicationRepository {
 
     private static final String ID_COLUMN = "id";
@@ -27,16 +30,17 @@ public class ApplicationRepository {
     private static final String AIRPORT_COLUMN = "airport";
 
     private final JdbcTemplate jdbcTemplate;
-    private final QueryConfig queryConfig;
+    private final QueryConfigurationProperties queryConfigurationProperties;
 
     @Autowired
-    public ApplicationRepository(JdbcTemplate jdbcTemplate, QueryConfig queryConfig) {
+    public ApplicationRepository(JdbcTemplate jdbcTemplate, QueryConfigurationProperties queryConfigurationProperties) {
         this.jdbcTemplate = jdbcTemplate;
-        this.queryConfig = queryConfig;
+        this.queryConfigurationProperties = queryConfigurationProperties;
     }
 
-    public List<PackageSize> getSizes() {
-        return jdbcTemplate.query(queryConfig.getPackageSize(), (rs, rowNum) ->
+    public List<PackageSize> getPackageSizes() {
+        logger.info("Getting all packages sizes from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getPackageSize(), (rs, rowNum) ->
                 PackageSize.builder()
                         .id(rs.getInt(ID_COLUMN))
                         .description(rs.getString(DESCRIPTION_COLUMN))
@@ -45,7 +49,8 @@ public class ApplicationRepository {
     }
 
     public List<PackageType> getPackageTypes() {
-        return jdbcTemplate.query(queryConfig.getPackageType(), (rs, rowNum) ->
+        logger.info("Getting all packages types from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getPackageType(), (rs, rowNum) ->
                 PackageType.builder()
                         .id(rs.getInt(ID_COLUMN))
                         .description(rs.getString(DESCRIPTION_COLUMN))
@@ -54,7 +59,8 @@ public class ApplicationRepository {
     }
 
     public List<TransportVelocity> getTransportVelocity() {
-        return jdbcTemplate.query(queryConfig.getTransportVelocity(), (rs, rowNum) ->
+        logger.info("Getting all transport velocities from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getTransportVelocity(), (rs, rowNum) ->
                 TransportVelocity.builder()
                         .id(rs.getInt(ID_COLUMN))
                         .description(rs.getString(DESCRIPTION_COLUMN))
@@ -63,7 +69,8 @@ public class ApplicationRepository {
     }
 
     public List<TransportType> getTransportTypes() {
-        return jdbcTemplate.query(queryConfig.getTransportType(), (rs, rowNum) ->
+        logger.info("Getting all transport types from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getTransportType(), (rs, rowNum) ->
                 TransportType.builder()
                         .id(rs.getInt(ID_COLUMN))
                         .description(rs.getString(DESCRIPTION_COLUMN))
@@ -72,7 +79,8 @@ public class ApplicationRepository {
     }
 
     public List<City> getCities() {
-        return jdbcTemplate.query(queryConfig.getCity(), (rs, rowNum) ->
+        logger.info("Getting all cities from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getCity(), (rs, rowNum) ->
                 City.builder()
                         .id(rs.getInt(ID_COLUMN))
                         .name(rs.getString(NAME_COLUMN))

@@ -68,7 +68,7 @@
                     <schemaVersion>V2</schemaVersion>
                     <resourceGroup>javaschool-server</resourceGroup>
                     <appName>javaschool</appName>
-                    <region>southcentral</region>
+                    <region>South Central US</region>
                     <pricingTier>F1</pricingTier>
                     <runtime>
                         <os>linux</os>
