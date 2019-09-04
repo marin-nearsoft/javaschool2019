@@ -1,4 +1,4 @@
-package com.example.demo.stub.config;
+package com.java.school.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

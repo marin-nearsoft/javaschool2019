@@ -1,12 +1,15 @@
-package com.example.demo.stub.config;
+package com.java.school.config;
 
-import com.example.demo.stub.repository.SpringRepo;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.java.school.domain.TransportType;
+import com.java.school.repository.ApplicationRepository;
 
 @Component
 public class AMQReceiver {
@@ -14,7 +17,7 @@ public class AMQReceiver {
     private static final Logger logger = LoggerFactory.getLogger(AMQReceiver.class);
 
     @Autowired
-    private SpringRepo repository;
+    private ApplicationRepository repository;
 
     public List<String> receiveMessage(String tableName) {
         List<String> list = null;
@@ -22,7 +25,7 @@ public class AMQReceiver {
         logger.info("Received <" + tableName + ">");
 
         if (tableName.equals("package_type")) {
-            list = repository.getTypes();
+            list = repository.getTransportTypes().stream().map(TransportType::getDescription).collect(Collectors.toList());
             logger.info("Response <" + list.toString() + ">");
         }
 

@@ -1,4 +1,4 @@
-package com.example.demo.stub.controller.advice;
+package com.java.school.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ControllerAdviceErrorHandler {
+public class ExceptionErrorHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleError(Exception e){

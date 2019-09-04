@@ -43,6 +43,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.6</version>
@@ -62,10 +66,10 @@
                 <version>1.6.0</version>
                 <configuration>
                     <schemaVersion>V2</schemaVersion>
-                    <resourceGroup>spring-demo-rg</resourceGroup>
-                    <appName>spring-demo</appName>
-                    <region>westeurope</region>
-                    <pricingTier>P1V2</pricingTier>
+                    <resourceGroup>javaschool-server</resourceGroup>
+                    <appName>javaschool</appName>
+                    <region>southcentral</region>
+                    <pricingTier>F1</pricingTier>
                     <runtime>
                         <os>linux</os>
                         <javaVersion>jre8</javaVersion>

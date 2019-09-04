@@ -1,13 +1,14 @@
-package com.example.demo.stub;
+package com.java.school;
 
-import com.example.demo.stub.config.AMQConfiguration;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.java.school.config.AMQConfiguration;
 
 @Component
 public class Runner implements CommandLineRunner {
