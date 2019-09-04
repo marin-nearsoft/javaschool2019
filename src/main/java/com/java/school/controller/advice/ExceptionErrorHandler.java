@@ -1,4 +1,4 @@
-package com.java.school.advice;
+package com.java.school.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
