@@ -1,5 +1,5 @@
 const config = {
-    "host": "http://localhost",
+    "host": "https://javaschool.azurewebsites.net",
     "port": "8088",
     "rest" : {
         "size" : "/size",
@@ -12,4 +12,4 @@ const config = {
         "sendShipping": "/sendShipping",
         "shippingInformation": "/shippingInformation"
     }
-}
+};
