@@ -9,6 +9,7 @@ import com.java.school.amq.sender.impl.AMQPackageSizeSender;
 import com.java.school.amq.sender.impl.AMQPackageTypeSender;
 import com.java.school.amq.sender.impl.AMQTransportTypeSender;
 import com.java.school.amq.sender.impl.AMQTransportVelocitySender;
+import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,36 +17,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AMQFactory {
 
-    private final AMQPackageSizeSender amqPackageSizeSender;
-    private final AMQPackageTypeSender amqPackageTypeSender;
-    private final AMQTransportVelocitySender amqTransportVelocitySender;
-    private final AMQTransportTypeSender amqTransportTypeSender;
-    private final AMQCitySender amqCitySender;
+    private final ApplicationRepository applicationRepository;
 
     @Autowired
-    public AMQFactory(AMQPackageSizeSender amqPackageSizeSender, AMQPackageTypeSender amqPackageTypeSender,
-                      AMQTransportVelocitySender amqTransportVelocitySender, AMQTransportTypeSender amqTransportTypeSender,
-                      AMQCitySender amqCitySender) {
-        this.amqPackageSizeSender = amqPackageSizeSender;
-        this.amqPackageTypeSender = amqPackageTypeSender;
-        this.amqTransportVelocitySender = amqTransportVelocitySender;
-        this.amqTransportTypeSender = amqTransportTypeSender;
-        this.amqCitySender = amqCitySender;
+    public AMQFactory(ApplicationRepository applicationRepository) {
+        this.applicationRepository = applicationRepository;
     }
 
     public AMQSender getSender(String tableName) {
         logger.info("Searching [{}] table", tableName);
         switch (tableName) {
             case "package_size":
-                return amqPackageSizeSender;
+                return AMQPackageSizeSender.getInstance(applicationRepository);
             case "package_type":
-                return amqPackageTypeSender;
+                return AMQPackageTypeSender.getInstance(applicationRepository);
             case "transport_velocity":
-                return amqTransportVelocitySender;
+                return AMQTransportVelocitySender.getInstance(applicationRepository);
             case "transport_type":
-                return amqTransportTypeSender;
+                return AMQTransportTypeSender.getInstance(applicationRepository);
             case "city":
-                return amqCitySender;
+                return AMQCitySender.getInstance(applicationRepository);
             default:
                 throw new IllegalArgumentException("There is no table with that name");
         }

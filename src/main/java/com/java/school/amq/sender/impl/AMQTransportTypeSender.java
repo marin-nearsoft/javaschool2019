@@ -1,9 +1,7 @@
 package com.java.school.amq.sender.impl;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.Objects;
 
 import com.java.school.amq.sender.AMQSender;
 import com.java.school.domain.TransportType;
@@ -11,15 +9,21 @@ import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 public class AMQTransportTypeSender implements AMQSender<TransportType> {
 
-    private final ApplicationRepository applicationRepository;
+    private ApplicationRepository applicationRepository;
+    private static AMQTransportTypeSender instance = null;
 
-    @Autowired
-    public AMQTransportTypeSender(ApplicationRepository applicationRepository) {
+    private AMQTransportTypeSender(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
+    }
+
+    public static AMQTransportTypeSender getInstance(ApplicationRepository applicationRepository) {
+        if (Objects.isNull(instance)) {
+            instance = new AMQTransportTypeSender(applicationRepository);
+        }
+        return instance;
     }
 
     @Override

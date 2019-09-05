@@ -1,9 +1,7 @@
 package com.java.school.amq.sender.impl;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.Objects;
 
 import com.java.school.amq.sender.AMQSender;
 import com.java.school.domain.PackageSize;
@@ -11,15 +9,21 @@ import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 public class AMQPackageSizeSender implements AMQSender<PackageSize> {
 
-    private final ApplicationRepository applicationRepository;
+    private ApplicationRepository applicationRepository;
+    private static AMQPackageSizeSender instance = null;
 
-    @Autowired
-    public AMQPackageSizeSender(ApplicationRepository applicationRepository) {
+    private AMQPackageSizeSender(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
+    }
+
+    public static AMQPackageSizeSender getInstance(ApplicationRepository applicationRepository) {
+        if (Objects.isNull(instance)) {
+            instance = new AMQPackageSizeSender(applicationRepository);
+        }
+        return instance;
     }
 
     @Override

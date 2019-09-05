@@ -1,9 +1,7 @@
 package com.java.school.amq.sender.impl;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.Objects;
 
 import com.java.school.amq.sender.AMQSender;
 import com.java.school.domain.City;
@@ -11,15 +9,21 @@ import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 public class AMQCitySender implements AMQSender<City> {
 
-    private final ApplicationRepository applicationRepository;
+    private ApplicationRepository applicationRepository;
+    private static AMQCitySender instance = null;
 
-    @Autowired
-    public AMQCitySender(ApplicationRepository applicationRepository) {
+    private AMQCitySender(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
+    }
+
+    public static AMQCitySender getInstance(ApplicationRepository applicationRepository) {
+        if (Objects.isNull(instance)) {
+            instance = new AMQCitySender(applicationRepository);
+        }
+        return instance;
     }
 
     @Override
