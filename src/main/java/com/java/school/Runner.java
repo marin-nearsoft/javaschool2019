@@ -23,10 +23,10 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws InterruptedException {
-        String message = "package_type";
+        String message = "city";
         logger.info("Requesting table: " + message);
-        List<String> packageTypes = (List<String>) rabbitTemplate.convertSendAndReceive(AMQConfiguration.TOPIC_EXCHANGE_NAME, "#", message);
-        logger.info("Receiving table: " + packageTypes.toString());
+        List packageTypes = (List) rabbitTemplate.convertSendAndReceive(AMQConfiguration.TOPIC_EXCHANGE_NAME, "#", message);
+        logger.info("Receiving table: " + packageTypes);
         Thread.sleep(1000);
     }
 

@@ -1,7 +1,7 @@
 package com.java.school.amq.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.java.school.amq.sender.AMQSender;
 import com.java.school.amq.sender.impl.AMQCitySender;
@@ -13,7 +13,7 @@ import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+@Component
 @Slf4j
 public class AMQFactory {
 
