@@ -27,13 +27,13 @@ public class AMQFactory {
     public AMQSender getSender(String tableName) {
         logger.info("Searching [{}] table", tableName);
         switch (tableName) {
-            case "package_size":
+            case "packageSize":
                 return AMQPackageSizeSender.getInstance(applicationRepository);
-            case "package_type":
+            case "packageType":
                 return AMQPackageTypeSender.getInstance(applicationRepository);
-            case "transport_velocity":
+            case "transportVelocity":
                 return AMQTransportVelocitySender.getInstance(applicationRepository);
-            case "transport_type":
+            case "transportType":
                 return AMQTransportTypeSender.getInstance(applicationRepository);
             case "city":
                 return AMQCitySender.getInstance(applicationRepository);

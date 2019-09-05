@@ -1,6 +1,7 @@
 package com.java.school.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,28 +27,28 @@ public class HomeController {
     }
 
     @GetMapping("/cities")
-    public ResponseEntity<List<City>> cities() {
-        return new ResponseEntity<>(repo.getCities(), HttpStatus.OK);
+    public ResponseEntity<List<String>> cities() {
+        return new ResponseEntity<>(repo.getCities().stream().map(City::getName).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/size")
-    public ResponseEntity<List<PackageSize>> size() {
-        return new ResponseEntity<>(repo.getPackageSizes(), HttpStatus.OK);
+    public ResponseEntity<List<String>> size() {
+        return new ResponseEntity<>(repo.getPackageSizes().stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/type")
-    public ResponseEntity<List<PackageType>> type() {
-        return new ResponseEntity<>(repo.getPackageTypes(), HttpStatus.OK);
+    public ResponseEntity<List<String>> type() {
+        return new ResponseEntity<>(repo.getPackageTypes().stream().map(PackageType::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/velocity")
-    public ResponseEntity<List<TransportVelocity>> velocity() {
-        return new ResponseEntity<>(repo.getTransportVelocity(), HttpStatus.OK);
+    public ResponseEntity<List<String>> velocity() {
+        return new ResponseEntity<>(repo.getTransportVelocity().stream().map(TransportVelocity::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/transport")
-    public ResponseEntity<List<TransportType>> transport() {
-        return new ResponseEntity<>(repo.getTransportTypes(), HttpStatus.OK);
+    public ResponseEntity<List<String>> transport() {
+        return new ResponseEntity<>(repo.getTransportTypes().stream().map(TransportType::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
 //    @PostMapping("/cityPath")
