@@ -52,6 +52,31 @@ public class HomeController {
         return new ResponseEntity<>(repo.getTransportTypes().stream().map(TransportType::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @GetMapping("/cities/json")
+    public ResponseEntity<List<City>> citiesJson() {
+        return new ResponseEntity<>(repo.getCities(), HttpStatus.OK);
+    }
+
+    @GetMapping("/size/json")
+    public ResponseEntity<List<PackageSize>> sizeJson() {
+        return new ResponseEntity<>(repo.getPackageSizes(), HttpStatus.OK);
+    }
+
+    @GetMapping("/type/json")
+    public ResponseEntity<List<PackageType>> typeJson() {
+        return new ResponseEntity<>(repo.getPackageTypes(), HttpStatus.OK);
+    }
+
+    @GetMapping("/velocity/json")
+    public ResponseEntity<List<TransportVelocity>> velocityJson() {
+        return new ResponseEntity<>(repo.getTransportVelocity(), HttpStatus.OK);
+    }
+
+    @GetMapping("/transport/json")
+    public ResponseEntity<List<TransportType>> transportJson() {
+        return new ResponseEntity<>(repo.getTransportTypes(), HttpStatus.OK);
+    }
+
 //    @PostMapping("/cityPath")
 //    public ResponseEntity<String> path(@RequestBody CityInfo cityInfo){
 //        String path = cityInfo.getOrigin() + "=>" + cityInfo.getDestination();
