@@ -16,6 +16,13 @@ public abstract class AMQSender {
     protected ApplicationRepository applicationRepository;
     private ObjectMapper objectMapper;
 
+    public String get() throws JsonProcessingException {
+        logger.info("Calling get object from repo");
+        return objectMapper.writeValueAsString(getFromRepo());
+    }
+
+    public abstract Object getFromRepo();
+
     @Autowired
     public void setApplicationRepository(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
@@ -25,11 +32,4 @@ public abstract class AMQSender {
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
-
-    public String get() throws JsonProcessingException {
-        logger.info("Calling get object from repo");
-        return objectMapper.writeValueAsString(getFromRepo());
-    }
-
-    public abstract Object getFromRepo();
 }

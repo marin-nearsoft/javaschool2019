@@ -1,5 +1,6 @@
 package com.java.school.amq.factory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.java.school.amq.sender.AMQSender;
@@ -21,26 +22,6 @@ public class AMQFactory {
     private AMQTransportTypeSender amqTransportTypeSender;
     private AMQCitySender amqCitySender;
 
-    public void setAmqPackageSizeSender(AMQPackageSizeSender amqPackageSizeSender) {
-        this.amqPackageSizeSender = amqPackageSizeSender;
-    }
-
-    public void setAmqPackageTypeSender(AMQPackageTypeSender amqPackageTypeSender) {
-        this.amqPackageTypeSender = amqPackageTypeSender;
-    }
-
-    public void setAmqTransportVelocitySender(AMQTransportVelocitySender amqTransportVelocitySender) {
-        this.amqTransportVelocitySender = amqTransportVelocitySender;
-    }
-
-    public void setAmqTransportTypeSender(AMQTransportTypeSender amqTransportTypeSender) {
-        this.amqTransportTypeSender = amqTransportTypeSender;
-    }
-
-    public void setAmqCitySender(AMQCitySender amqCitySender) {
-        this.amqCitySender = amqCitySender;
-    }
-
     public AMQSender getSender(String tableName) {
         logger.info("Searching [{}] table", tableName);
         switch (tableName) {
@@ -57,5 +38,30 @@ public class AMQFactory {
             default:
                 throw new IllegalArgumentException("There is no table with that name");
         }
+    }
+
+    @Autowired
+    public void setAmqPackageSizeSender(AMQPackageSizeSender amqPackageSizeSender) {
+        this.amqPackageSizeSender = amqPackageSizeSender;
+    }
+
+    @Autowired
+    public void setAmqPackageTypeSender(AMQPackageTypeSender amqPackageTypeSender) {
+        this.amqPackageTypeSender = amqPackageTypeSender;
+    }
+
+    @Autowired
+    public void setAmqTransportVelocitySender(AMQTransportVelocitySender amqTransportVelocitySender) {
+        this.amqTransportVelocitySender = amqTransportVelocitySender;
+    }
+
+    @Autowired
+    public void setAmqTransportTypeSender(AMQTransportTypeSender amqTransportTypeSender) {
+        this.amqTransportTypeSender = amqTransportTypeSender;
+    }
+
+    @Autowired
+    public void setAmqCitySender(AMQCitySender amqCitySender) {
+        this.amqCitySender = amqCitySender;
     }
 }
