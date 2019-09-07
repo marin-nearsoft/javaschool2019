@@ -90,4 +90,10 @@ public class ApplicationRepository {
                         .build());
     }
 
+    public List<PackageSize> getPackageSizesByPackageType(String packateTypeName) {
+        // TODO Ricardo do your magic
+        // Creo que seria el siguiente query man
+        // SELECT * FROM package_size WHERE id in (SELECT package_size_id FROM package_type_size WHERE package_type_id = (SELECT id FROM package_type WHERE description = 'Envelope'))
+        return null;
+    }
 }

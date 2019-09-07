@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.school.domain.City;
@@ -32,8 +33,8 @@ public class HomeController {
     }
 
     @GetMapping("/size")
-    public ResponseEntity<List<String>> size() {
-        return new ResponseEntity<>(repo.getPackageSizes().stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
+    public ResponseEntity<List<String>> size(@RequestParam String packateTypeName) {
+        return new ResponseEntity<>(repo.getPackageSizesByPackageType(packateTypeName).stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/type")

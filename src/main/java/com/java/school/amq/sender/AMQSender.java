@@ -1,7 +1,7 @@
 package com.java.school.amq.sender;
 
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-public interface AMQSender<T> {
-    List<T> get();
+public interface AMQSender {
+    String get() throws JsonProcessingException;
 }

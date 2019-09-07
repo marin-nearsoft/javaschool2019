@@ -10,6 +10,7 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.school.amq.reciever.AMQReceiver;
 
 @Configuration
@@ -47,6 +48,11 @@ public class AMQConfiguration {
     @Bean
     MessageListenerAdapter listenerAdapter(AMQReceiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
 }
