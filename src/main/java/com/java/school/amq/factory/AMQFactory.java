@@ -1,16 +1,13 @@
 package com.java.school.amq.factory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.school.amq.sender.AMQSender;
 import com.java.school.amq.sender.impl.AMQCitySender;
 import com.java.school.amq.sender.impl.AMQPackageSizeSender;
 import com.java.school.amq.sender.impl.AMQPackageTypeSender;
 import com.java.school.amq.sender.impl.AMQTransportTypeSender;
 import com.java.school.amq.sender.impl.AMQTransportVelocitySender;
-import com.java.school.repository.ApplicationRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,28 +15,45 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AMQFactory {
 
-    private final ApplicationRepository applicationRepository;
-    private final ObjectMapper objectMapper;
+    private AMQPackageSizeSender amqPackageSizeSender;
+    private AMQPackageTypeSender amqPackageTypeSender;
+    private AMQTransportVelocitySender amqTransportVelocitySender;
+    private AMQTransportTypeSender amqTransportTypeSender;
+    private AMQCitySender amqCitySender;
 
-    @Autowired
-    public AMQFactory(ApplicationRepository applicationRepository, ObjectMapper objectMapper) {
-        this.applicationRepository = applicationRepository;
-        this.objectMapper = objectMapper;
+    public void setAmqPackageSizeSender(AMQPackageSizeSender amqPackageSizeSender) {
+        this.amqPackageSizeSender = amqPackageSizeSender;
+    }
+
+    public void setAmqPackageTypeSender(AMQPackageTypeSender amqPackageTypeSender) {
+        this.amqPackageTypeSender = amqPackageTypeSender;
+    }
+
+    public void setAmqTransportVelocitySender(AMQTransportVelocitySender amqTransportVelocitySender) {
+        this.amqTransportVelocitySender = amqTransportVelocitySender;
+    }
+
+    public void setAmqTransportTypeSender(AMQTransportTypeSender amqTransportTypeSender) {
+        this.amqTransportTypeSender = amqTransportTypeSender;
+    }
+
+    public void setAmqCitySender(AMQCitySender amqCitySender) {
+        this.amqCitySender = amqCitySender;
     }
 
     public AMQSender getSender(String tableName) {
         logger.info("Searching [{}] table", tableName);
         switch (tableName) {
             case "packageSize":
-                return AMQPackageSizeSender.getInstance(applicationRepository, objectMapper);
+                return amqPackageSizeSender;
             case "packageType":
-                return AMQPackageTypeSender.getInstance(applicationRepository, objectMapper);
+                return amqPackageTypeSender;
             case "transportVelocity":
-                return AMQTransportVelocitySender.getInstance(applicationRepository, objectMapper);
+                return amqTransportVelocitySender;
             case "transportType":
-                return AMQTransportTypeSender.getInstance(applicationRepository, objectMapper);
+                return amqTransportTypeSender;
             case "city":
-                return AMQCitySender.getInstance(applicationRepository, objectMapper);
+                return amqCitySender;
             default:
                 throw new IllegalArgumentException("There is no table with that name");
         }
