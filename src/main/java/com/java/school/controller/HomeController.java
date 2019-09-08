@@ -1,15 +1,23 @@
 package com.java.school.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.java.school.config.AMQConfiguration;
 import com.java.school.domain.City;
 import com.java.school.domain.PackageSize;
 import com.java.school.domain.PackageType;
@@ -17,14 +25,21 @@ import com.java.school.domain.TransportType;
 import com.java.school.domain.TransportVelocity;
 import com.java.school.repository.ApplicationRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class HomeController {
 
     private final ApplicationRepository repo;
+    private final RabbitTemplate rabbitTemplate;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public HomeController(ApplicationRepository repo) {
+    public HomeController(ApplicationRepository repo, RabbitTemplate rabbitTemplate, ObjectMapper mapper) {
         this.repo = repo;
+        this.rabbitTemplate = rabbitTemplate;
+        this.mapper = mapper;
     }
 
     @GetMapping("/cities")
@@ -75,6 +90,16 @@ public class HomeController {
     @GetMapping("/transport/json")
     public ResponseEntity<List<TransportType>> transportJson() {
         return new ResponseEntity<>(repo.getTransportTypes(), HttpStatus.OK);
+    }
+
+    @GetMapping("/runner/{message}")
+    public ResponseEntity<JsonNode> run(@PathVariable String message) throws IOException {
+        logger.info("Requesting table: " + message);
+        ObjectNode messageJson = JsonNodeFactory.instance.objectNode();
+        messageJson.put("type", message);
+        String packageTypes = (String) rabbitTemplate.convertSendAndReceive(AMQConfiguration.TOPIC_EXCHANGE_NAME, "#", messageJson.toString());
+        logger.info("Receiving table: " + packageTypes);
+        return new ResponseEntity<>(mapper.readValue(packageTypes, JsonNode.class), HttpStatus.OK);
     }
 
 //    @PostMapping("/cityPath")

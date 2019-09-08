@@ -1,9 +1,11 @@
 package com.java.school.amq.reciever;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,12 +22,13 @@ public class AMQReceiver {
     private ObjectMapper objectMapper;
 
     @SuppressWarnings("unused")
-    public String receiveMessage(String tableName) {
-        logger.info("Received <{}>", tableName);
-        AMQSender amqSender = amqFactory.getSender(tableName);
+    public String receiveMessage(String messageRequest) {
+        logger.info("Received <{}>", messageRequest);
         try {
+            JsonNode jsonNode = objectMapper.readValue(messageRequest, ObjectNode.class);
+            AMQSender amqSender = amqFactory.getSender(jsonNode.get("type").asText());
             return amqSender.get();
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             return createException();
         }
     }
