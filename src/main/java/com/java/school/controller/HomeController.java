@@ -47,9 +47,14 @@ public class HomeController {
         return new ResponseEntity<>(repo.getCities().stream().map(City::getName).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @GetMapping("/sizeByType")
+    public ResponseEntity<List<String>> size(@RequestParam String packageTypeName) {
+        return new ResponseEntity<>(repo.getPackageSizesByPackageType(packageTypeName).stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
     @GetMapping("/size")
-    public ResponseEntity<List<String>> size(@RequestParam String packateTypeName) {
-        return new ResponseEntity<>(repo.getPackageSizesByPackageType(packateTypeName).stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
+    public ResponseEntity<List<String>> size() {
+        return new ResponseEntity<>(repo.getPackageSizes().stream().map(PackageSize::getDescription).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @GetMapping("/type")

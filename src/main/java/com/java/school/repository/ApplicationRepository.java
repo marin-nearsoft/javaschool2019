@@ -90,10 +90,13 @@ public class ApplicationRepository {
                         .build());
     }
 
-    public List<PackageSize> getPackageSizesByPackageType(String packateTypeName) {
-        // TODO Ricardo do your magic
-        // Creo que seria el siguiente query man
-        // SELECT * FROM package_size WHERE id in (SELECT package_size_id FROM package_type_size WHERE package_type_id = (SELECT id FROM package_type WHERE description = 'Envelope'))
-        return null;
+    public List<PackageSize> getPackageSizesByPackageType(String packageTypeName) {
+        logger.info("Getting all package sizes by package type from the database");
+        return jdbcTemplate.query(queryConfigurationProperties.getPackageSizeByPackageType(), new Object[]{packageTypeName}, (rs, rowNum) ->
+                PackageSize.builder()
+                        .id(rs.getInt(ID_COLUMN))
+                        .description(rs.getString(DESCRIPTION_COLUMN))
+                        .priceFactor(rs.getInt(PRICE_FACTOR_COLUMN))
+                        .build());
     }
 }

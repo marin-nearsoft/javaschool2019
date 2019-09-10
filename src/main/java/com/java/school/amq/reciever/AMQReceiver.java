@@ -26,7 +26,7 @@ public class AMQReceiver {
         logger.info("Received <{}>", messageRequest);
         try {
             JsonNode jsonNode = objectMapper.readValue(messageRequest, ObjectNode.class);
-            AMQSender amqSender = amqFactory.getSender(jsonNode.get("type").asText());
+            AMQSender amqSender = amqFactory.getSender(jsonNode);
             return amqSender.get();
         } catch (IOException e) {
             return createException();

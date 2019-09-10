@@ -15,5 +15,6 @@ public class QueryConfigurationProperties {
     private String transportVelocity;
     private String transportType;
     private String city;
+    private String packageSizeByPackageType;
 
 }
