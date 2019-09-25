@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.java.school.config.AMQConfiguration;
 import com.java.school.domain.City;
 import com.java.school.domain.PackageSize;
@@ -97,12 +96,9 @@ public class HomeController {
         return new ResponseEntity<>(repo.getTransportTypes(), HttpStatus.OK);
     }
 
-    @GetMapping("/runner/{message}")
-    public ResponseEntity<JsonNode> run(@PathVariable String message) throws IOException {
-        logger.info("Requesting table: " + message);
-        ObjectNode messageJson = JsonNodeFactory.instance.objectNode();
-        messageJson.put("type", message);
-        String packageTypes = (String) rabbitTemplate.convertSendAndReceive(AMQConfiguration.TOPIC_EXCHANGE_NAME, "#", messageJson.toString());
+    @PostMapping("/runner")
+    public ResponseEntity<JsonNode> run(@RequestBody String message) throws IOException {
+        String packageTypes = (String) rabbitTemplate.convertSendAndReceive(AMQConfiguration.TOPIC_EXCHANGE_NAME, "#", message);
         logger.info("Receiving table: " + packageTypes);
         return new ResponseEntity<>(mapper.readValue(packageTypes, JsonNode.class), HttpStatus.OK);
     }
